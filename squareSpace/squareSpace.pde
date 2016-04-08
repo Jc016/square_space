@@ -1,17 +1,14 @@
-BanqueCouleurs bc = new BanqueCouleurs();
-color currentColor;
+private final  int SUBSIVISIONS = 14;
+GestionnaireTuiles gt;
+
 void setup(){
-  size(800,800);
+  size(800, 800);
   frameRate(60);
-  currentColor = bc.getRandomColor();
+  gt = new GestionnaireTuiles(width, height, SUBSIVISIONS);
 }
 
 void draw(){
-  fill(currentColor);
-  noStroke();
-  ellipse(width/2,height/2,400,400);
+	gt.update();
 }
 
-void mousePressed(){
-	currentColor = bc.getRandomColor();
-}
+
