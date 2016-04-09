@@ -1,11 +1,11 @@
 class GestionnaireTuiles{
+  final color BACKGROUND_FILL_COLOR = #f9f8ea;
   ArrayList<Tuile> _arrayTuiles;
   int _subdivisions;
   PVector _canvasDimensions;
   PVector _tuilesDimensions;
   boolean _changeOccured;
   ForceAlterationTuiles _forceAlterationTuiles;
-
 
   GestionnaireTuiles(float canvasWidth, float canvasHeight, int subdivisions){
   	_subdivisions = subdivisions;
@@ -19,12 +19,11 @@ class GestionnaireTuiles{
 
   public void update(){
     processMouseEvents();
-    if(_changeOccured){
-      background(0);
-      for(Tuile t : _arrayTuiles)
-        t.update();
-      }
-      _changeOccured = false;
+    background(BACKGROUND_FILL_COLOR);
+    for(Tuile t : _arrayTuiles){
+      t.sendForceToProcess(_forceAlterationTuiles);
+      t.update();
+    } 
   }
 
   private void createTuile(PVector position, PVector dimensions){
@@ -44,14 +43,15 @@ class GestionnaireTuiles{
   	}
   	println("ended create tuiles");
   }
-
-}
-
-private void processMouseEvents(){
-  if(mousePressed){
-    _forceAlterationTuiles.recordForce(new PVector(pmouseX, pmouseY), new PVector(mouseX, mouseY));
-  }else{
-    _forceAlterationTuiles.reset();
+  private void processMouseEvents(){
+    if(mousePressed){
+      _forceAlterationTuiles.recordForce(new PVector(pmouseX, pmouseY), new PVector(mouseX, mouseY));
+      _changeOccured = true;
+    }else{
+      _forceAlterationTuiles.reset();
+    }
   }
 
 }
+
+

@@ -1,4 +1,5 @@
 class BanqueCouleurs{
+  
   private final color[] COLORS_BANK_ARRAY = {#150501, #FFFDFC, #5AB1E5, #23CDDB, #25CBA9, #E0A524, #E07726, #E0D126,  #7E2222, #F05429};
   private final int  CHANGING_COLOR_FILTER = 1;
   private color _lastColor;
