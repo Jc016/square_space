@@ -148,7 +148,7 @@ class Tuile {
 	}
 
 	private void checkIfDyingBegan(){
-		if(PVector.dist(_originalPosition, _position) != 0)
+		if(PVector.dist(_originalPosition, _position) != 0 || _rotationAngle != 0)
 			initDying();
 		
 	}

@@ -1,6 +1,6 @@
 class GestionnaireTuiles{
   private final color BACKGROUND_FILL_COLOR = #fef7e0;
-  private final int RESPAWN_INTERVAL = 30;
+  private final int RESPAWN_INTERVAL = 20;
   private ArrayList<Tuile> _arrayTuiles;
   private ArrayList<TuileTemplate> _arrayTuileTemplates;
   private int _subdivisions;
