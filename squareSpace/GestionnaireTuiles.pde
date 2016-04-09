@@ -14,7 +14,7 @@ class GestionnaireTuiles{
   GestionnaireTuiles(float canvasWidth, float canvasHeight, int subdivisions){
   	_subdivisions = subdivisions;
   	_canvasDimensions = new PVector(canvasWidth, canvasHeight);
-    _tuilesDimensions = new PVector(canvasWidth / subdivisions, canvasHeight / subdivisions);
+    _tuilesDimensions = new PVector(canvasWidth / subdivisions, canvasWidth / subdivisions);
     _isBuildingTiles = false;
     reset();
   }
