@@ -1,4 +1,5 @@
 class GestionnaireTuiles{
+
   private final color BACKGROUND_FILL_COLOR = #fef7e0;
   private final int RESPAWN_INTERVAL = 20;
   private ArrayList<Tuile> _arrayTuiles;
@@ -46,7 +47,7 @@ class GestionnaireTuiles{
   			createTuile(
   				new PVector(_tuilesDimensions.x * j, _tuilesDimensions.y * i), 
   				new PVector(_tuilesDimensions.x, _tuilesDimensions.y)
-			 );
+  		 );
   		}
   	}
   }

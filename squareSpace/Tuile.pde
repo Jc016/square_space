@@ -12,35 +12,35 @@ class Tuile {
 	private int _dyingElapsedTime, _startedDyingTime;
 	private boolean _isDying;
 
-    Tuile(GestionnaireTuiles refGestionnaireTuiles, PVector position, PVector dimensions){
-    	_refGestionnaireTuiles = refGestionnaireTuiles;
-    	_position = position;
-    	_dimensions = dimensions;
-    	init();
+	Tuile(GestionnaireTuiles refGestionnaireTuiles, PVector position, PVector dimensions){
+		_refGestionnaireTuiles = refGestionnaireTuiles;
+		_position = position;
+		_dimensions = dimensions;
+		init();
 	}
 
-    Tuile(GestionnaireTuiles refGestionnaireTuiles, TuileTemplate tuileTemplate){
-    	_refGestionnaireTuiles = refGestionnaireTuiles;
-    	_position = tuileTemplate.getPosition();
-    	_dimensions = tuileTemplate.getDimensions();
-    	init();
+	Tuile(GestionnaireTuiles refGestionnaireTuiles, TuileTemplate tuileTemplate){
+		_refGestionnaireTuiles = refGestionnaireTuiles;
+		_position = tuileTemplate.getPosition();
+		_dimensions = tuileTemplate.getDimensions();
+		init();
 	}
 
 	private void init(){
-    	_originalPosition = _position.copy();
-    	_rotationAngle = 0;
-    	_opacity = 255;
-    	_dyingElapsedTime=0;
-    	_startedDyingTime = 0;
-    	processEndPosition();
-    	resetSpeed();
-    	resetAcceleration();
-    	resetRotationSpeed();
-    	resetRotationAcceleration();
-    	_banqueCouleurs = new BanqueCouleurs();
-    	_backgroundColor  =_banqueCouleurs.getRandomColor();
-    	_isDying = false;
-    	generateCanvas();
+		_originalPosition = _position.copy();
+		_rotationAngle = 0;
+		_opacity = 255;
+		_dyingElapsedTime=0;
+		_startedDyingTime = 0;
+		processEndPosition();
+		resetSpeed();
+		resetAcceleration();
+		resetRotationSpeed();
+		resetRotationAcceleration();
+		_banqueCouleurs = new BanqueCouleurs();
+		_backgroundColor  =_banqueCouleurs.getRandomColor();
+		_isDying = false;
+		generateCanvas();
 	}
 
 	public void update(){
@@ -97,7 +97,7 @@ class Tuile {
 	private boolean pointInTuile(PVector point){
 		return point.x >= _position.x && point.x <= _endPosition.x && point.y >= _position.y && point.y <= _endPosition.y ? true : false ;
 	};
-	
+
 	private void processEndPosition(){
 		_endPosition = PVector.add(_position, _dimensions);
 	}
