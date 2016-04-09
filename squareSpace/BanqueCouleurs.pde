@@ -4,7 +4,7 @@ class BanqueCouleurs{
   private color _lastColor;
   private int _lastColorIndex;
   private final int  NUMBER_OF_COLOR = COLORS_BANK_ARRAY.length;
-  private int _chanceFactor = 10;
+  private int _chanceFactor = 6;
 
   BanqueCouleurs(){
 	_lastColor = COLORS_BANK_ARRAY[0];
@@ -29,6 +29,5 @@ class BanqueCouleurs{
   public color getMaybeLastColor(){
   	 return (int)random(_chanceFactor) == CHANGING_COLOR_FILTER ? getRandomColor() : getLastColor() ;
   }
-
 
 }
