@@ -1,6 +1,6 @@
 class ForceAlterationTuiles{
 	
-	private final float FORCE_SENSIBILITY = 0.1, ROTATION_FORCE_SENSIBILITY = 0.03;
+	private final float FORCE_SENSIBILITY = 0.05, ROTATION_FORCE_SENSIBILITY = 0.03;
 	private PVector _origin, _end, _force;
 	float  _rotationForce;
 	ForceAlterationTuiles(){

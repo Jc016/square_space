@@ -1,6 +1,6 @@
 class Tuile {
 
-	private final int PADDING = 8, DYING_DURATION = 2500;
+	private final int PADDING = 8, DYING_DURATION = 1500;
 	private final float ROTATION_RESISTANCE = 0.001, FORCE_RESISTANCE= 0.99;
 	private PGraphics _canvas;
 	private PVector _originalPosition, _position, _dimensions, _endPosition, _speed, _acceleration;
