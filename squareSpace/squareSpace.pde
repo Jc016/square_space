@@ -3,7 +3,7 @@ GestionnaireTuiles gt;
 
 void setup(){
 	size(800, 800);
-	frameRate(30);
+	frameRate(60);
 	gt = new GestionnaireTuiles(width, height, SUBSIVISIONS);
 }
 

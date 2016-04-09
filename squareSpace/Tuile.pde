@@ -1,7 +1,7 @@
 class Tuile {
 
-	private final int PADDING = 8, DYING_DURATION = 4000;
-	private final float ROTATION_RESISTANCE = 0.001, FORCE_RESISTANCE= 0.95;
+	private final int PADDING = 8, DYING_DURATION = 2500;
+	private final float ROTATION_RESISTANCE = 0.001, FORCE_RESISTANCE= 0.99;
 	private PGraphics _canvas;
 	private PVector _originalPosition, _position, _dimensions, _endPosition, _speed, _acceleration;
 	private float _rotationAngle, _rotationSpeed, _rotationAcceleration;
@@ -9,19 +9,29 @@ class Tuile {
 	private BanqueCouleurs _banqueCouleurs;
 	private color _backgroundColor;
 	private GestionnaireTuiles _refGestionnaireTuiles;
-	private int _id, _dyingElapsedTime;
+	private int _dyingElapsedTime, _startedDyingTime;
 	private boolean _isDying;
 
-    Tuile(GestionnaireTuiles refGestionnaireTuiles, int id, PVector position, PVector dimensions){
-    	println("initializing tuile: "+ id);
+    Tuile(GestionnaireTuiles refGestionnaireTuiles, PVector position, PVector dimensions){
     	_refGestionnaireTuiles = refGestionnaireTuiles;
-    	_id = id;
     	_position = position;
-    	_originalPosition = _position.copy();
     	_dimensions = dimensions;
+    	init();
+	}
+
+    Tuile(GestionnaireTuiles refGestionnaireTuiles, TuileTemplate tuileTemplate){
+    	_refGestionnaireTuiles = refGestionnaireTuiles;
+    	_position = tuileTemplate.getPosition();
+    	_dimensions = tuileTemplate.getDimensions();
+    	init();
+	}
+
+	private void init(){
+    	_originalPosition = _position.copy();
     	_rotationAngle = 0;
     	_opacity = 255;
     	_dyingElapsedTime=0;
+    	_startedDyingTime = 0;
     	processEndPosition();
     	resetSpeed();
     	resetAcceleration();
@@ -75,7 +85,6 @@ class Tuile {
 		_canvas = createGraphics((int)_dimensions.x, (int)_dimensions.y);
 		drawBackground();
 		drawCirclePattern();
-		println("created canvas");	
 	}
 
 	public void sendForceToProcess (ForceAlterationTuiles forceAlterationTuiles){
@@ -133,12 +142,29 @@ class Tuile {
 	}
 
 	private void processDeath(){
+		_dyingElapsedTime = millis() - _startedDyingTime;
 		processOpacity();
+		checkIfDead();
 	}
 
 	private void checkIfDyingBegan(){
 		if(PVector.dist(_originalPosition, _position) != 0)
-			_isDying = true;
+			initDying();
+		
+	}
+
+	private void initDying(){
+		_isDying = true;
+		_startedDyingTime = millis();
+	}
+
+	private void checkIfDead(){
+		if(_dyingElapsedTime > DYING_DURATION)
+			_refGestionnaireTuiles.deleteTuile(this);
+	}
+
+	public TuileTemplate exportToTemplate(){
+		return new TuileTemplate(_originalPosition.copy(), _dimensions.copy());
 	}
 
 }

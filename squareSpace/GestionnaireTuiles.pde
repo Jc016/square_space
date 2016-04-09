@@ -1,12 +1,14 @@
 class GestionnaireTuiles{
-  final color BACKGROUND_FILL_COLOR = #fef7e0;
-  ArrayList<Tuile> _arrayTuiles;
-  int _subdivisions;
-  PVector _canvasDimensions;
-  PVector _tuilesDimensions;
-  boolean _isBuildingTiles;
-  ForceAlterationTuiles _forceAlterationTuiles;
-
+  private final color BACKGROUND_FILL_COLOR = #fef7e0;
+  private final int RESPAWN_INTERVAL = 30;
+  private ArrayList<Tuile> _arrayTuiles;
+  private ArrayList<TuileTemplate> _arrayTuileTemplates;
+  private int _subdivisions;
+  private PVector _canvasDimensions;
+  private PVector _tuilesDimensions;
+  private boolean _isBuildingTiles;
+  private ForceAlterationTuiles _forceAlterationTuiles;
+  private int _timeSinceLastRespawn, _lastRespawnTimeStamp;
 
   GestionnaireTuiles(float canvasWidth, float canvasHeight, int subdivisions){
   	_subdivisions = subdivisions;
@@ -21,20 +23,24 @@ class GestionnaireTuiles{
       processKeyPressEvents();
       processMouseEvents();
       background(BACKGROUND_FILL_COLOR);
-      for(Tuile t : _arrayTuiles){
+      for(int i = _arrayTuiles.size() -1; i>= 0; i--){
+        Tuile t = _arrayTuiles.get(i);
         t.sendForceToProcess(_forceAlterationTuiles);
         t.update();
-      } 
+      }
+      processTuilesRespawn(); 
     }
-
   }
 
   private void createTuile(PVector position, PVector dimensions){
-  	_arrayTuiles.add(new Tuile(this, _arrayTuiles.size(), position, dimensions));
+  	_arrayTuiles.add(new Tuile(this, position, dimensions));
+  }
+
+  private void createTuile(TuileTemplate tuileTemplate){
+    _arrayTuiles.add(new Tuile(this, tuileTemplate));
   }
 
   private void createTuiles(){
-  	println("started create tuiles");
   	for(int i = 0 ; i < (int)_subdivisions; i++){
   		for(int j=0; j < (int)_subdivisions; j++){
   			createTuile(
@@ -43,7 +49,6 @@ class GestionnaireTuiles{
 			 );
   		}
   	}
-  	println("ended create tuiles");
   }
   private void processMouseEvents(){
     if(mousePressed){
@@ -63,11 +68,34 @@ class GestionnaireTuiles{
 
   private void reset(){
     background(BACKGROUND_FILL_COLOR);
+    _timeSinceLastRespawn = 0;
+    _lastRespawnTimeStamp = 0;
     _isBuildingTiles=true;
     _arrayTuiles = new ArrayList<Tuile>();
+    _arrayTuileTemplates = new ArrayList<TuileTemplate>();
     _forceAlterationTuiles = new ForceAlterationTuiles();
     createTuiles();
     _isBuildingTiles = false;
+  }
+
+  private void deleteTuile(Tuile tuile){
+    addTuileTemplate(tuile.exportToTemplate());
+    _arrayTuiles.remove(tuile);
+    tuile = null;
+  }
+
+  private void addTuileTemplate(TuileTemplate tuileTemplate){
+    _arrayTuileTemplates.add(tuileTemplate);
+  }
+
+  private void processTuilesRespawn(){
+    _timeSinceLastRespawn = millis() - _lastRespawnTimeStamp;
+    if(_timeSinceLastRespawn > RESPAWN_INTERVAL && _arrayTuileTemplates.size() > 0 && !mousePressed){
+      createTuile(_arrayTuileTemplates.get(0));
+      _arrayTuileTemplates.remove(0);
+      _lastRespawnTimeStamp = millis();
+
+    }
   }
 
 }
