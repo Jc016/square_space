@@ -131,8 +131,7 @@ class Tuile {
 		if(_rotationSpeed >= 0)
 			_rotationSpeed = constrain(_rotationSpeed - ROTATION_RESISTANCE, 0,  _rotationSpeed);
 		else
-			_rotationSpeed = constrain(_rotationSpeed + ROTATION_RESISTANCE, _rotationSpeed, 0);
-		
+			_rotationSpeed = constrain(_rotationSpeed + ROTATION_RESISTANCE, _rotationSpeed, 0);	
 		resetAcceleration();
 		resetRotationAcceleration();
 	}
@@ -148,7 +147,7 @@ class Tuile {
 	}
 
 	private void checkIfDyingBegan(){
-		if(PVector.dist(_originalPosition, _position) != 0 || _rotationAngle != 0)
+		if(PVector.dist(_originalPosition, _position) != 0 && _rotationAngle != 0)
 			initDying();
 		
 	}
